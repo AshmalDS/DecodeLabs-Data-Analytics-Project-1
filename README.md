@@ -1,8 +1,10 @@
-# DecodeLabs Data Analytics Internship — Project 1
+# Data Analytics  — Project  
 
-## Data Cleaning & Preparation 🧹
+##  Data Cleaning & Preparation 🧹
 
-This project is **Project 1** of my Data Analytics Internship at DecodeLabs.
+## E_commerce DATASET
+
+This project is **Project 1** of my Data Analytics .
 
 The objective of this project was to clean and prepare the provided **Dataset for Data Analytics** by identifying missing values, checking duplicates, correcting data formats, and validating the final dataset.
 
