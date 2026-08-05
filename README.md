@@ -1,54 +1,84 @@
-# Data Analytics — Project 1
-## E-Commerce Dataset: Data Cleaning & Exploratory Data Analysis
+# 🛒 E-Commerce Sales Analysis
 
-This project is **Project 1** of my Data Analytics portfolio. The objective was to clean and prepare the provided **Dataset for Data Analytics**, then perform exploratory data analysis to uncover business performance, customer behavior, and product/marketing insights.
+### Data Cleaning, Exploratory Data Analysis & Business Insights
 
-## Dataset
+## 📌 Project Overview
 
-* **Rows:** 1,200
-* **Columns:** 14
-* **File:** `Dataset for Data Analytics.xlsx`
-* **Fields:** OrderID, Date, CustomerID, Product, Quantity, UnitPrice, ShippingAddress, PaymentMethod, OrderStatus, TrackingNumber, ItemsInCart, CouponCode, ReferralSource, TotalPrice
+This project demonstrates an end-to-end **Data Analytics workflow** using an e-commerce sales dataset.
 
-## Tools & Technologies
+The objective was to clean, validate, analyze, and visualize the data to uncover insights related to **business performance, customer behavior, product performance, payment methods, promotions, referral channels, and sales trends**.
 
-* Python
-* Pandas / NumPy
-* Matplotlib / Seaborn
-* Jupyter Notebook
-* Excel
+The project was completed using **Python, Pandas, NumPy, Matplotlib, Seaborn, Jupyter Notebook, and Excel**.
 
 ---
 
-## Part 1: Data Cleaning & Preparation 🧹
+## 📂 Dataset
+
+**File:** `E_Commerce Dataset.xlsx`
+
+| Attribute           |     Details |
+| ------------------- | ----------: |
+| Rows                |       1,200 |
+| Columns             |          14 |
+| Unique Customers    |       1,189 |
+| Total Quantity Sold | 3,535 units |
+
+### Dataset Fields
+
+`OrderID`, `Date`, `CustomerID`, `Product`, `Quantity`, `UnitPrice`, `ShippingAddress`, `PaymentMethod`, `OrderStatus`, `TrackingNumber`, `ItemsInCart`, `CouponCode`, `ReferralSource`, `TotalPrice`
+
+---
+
+# 🧹 Part 1 — Data Cleaning & Preparation
 
 ### 1. Dataset Inspection
-* Examined the first few records using `head()`
-* Checked the number of rows and columns
-* Reviewed column information and data types using `info()`
-* Used `describe()` to understand numerical and categorical columns
+
+The dataset was initially inspected to understand its structure and quality.
+
+Performed:
+
+* Previewed records using `head()`
+* Checked dataset dimensions using `shape`
+* Reviewed column names and data types using `info()`
+* Examined numerical and categorical distributions using `describe()`
 
 ### 2. Missing Values
-Missing values were identified using Pandas. The `CouponCode` column contained **309 missing values**, handled by replacing them with:
+
+Missing values were identified using Pandas.
+
+The `CouponCode` column contained **309 missing values**.
+
+Since a missing coupon code indicates that no coupon was recorded for the order, these values were replaced with:
+
 ```text
 No_CouponCode
 ```
 
 ### 3. Duplicate Records
-The dataset was checked for completely duplicated rows. **Result:** 0 duplicate rows.
+
+The dataset was checked for completely duplicated rows.
+
+**Result:** 0 duplicate rows found.
 
 ### 4. Duplicate Order IDs
-`OrderID` was checked to ensure each order had a unique identifier. **Result:** 0 duplicate OrderIDs.
+
+`OrderID` was checked to ensure that each order had a unique identifier.
+
+**Result:** 0 duplicate OrderIDs found.
 
 ### 5. Date Validation
-The `Date` column was converted to datetime format and checked for invalid dates. **Result:** 0 invalid dates.
+
+The `Date` column was converted to Pandas datetime format and checked for invalid or missing dates.
+
+**Result:** 0 invalid dates found.
 
 ### 6. Text Cleaning
-Leading and trailing whitespace was removed from the `Product` column to improve consistency.
 
-### Final Data Validation
+Leading and trailing whitespace was removed from the `Product` column to ensure consistent product names during analysis and grouping.
 
-| Check              |           Result |
+### ✅ Final Data Validation
+
+| Data Quality Check |           Result |
 | ------------------ | ---------------: |
 | Missing values     |                0 |
 | Duplicate rows     |                0 |
@@ -58,83 +88,289 @@ Leading and trailing whitespace was removed from the `Product` column to improve
 
 ---
 
-## Part 2: Exploratory Data Analysis 📊
+# 📊 Part 2 — Exploratory Data Analysis
 
-### Business Performance
-* **Total Revenue:** $1,264,761.96
-* **Average Order Value:** $1,053.97
-* **Total Orders:** 1,200
-* **Total Customers:** 1,189
-* **Total Quantity Sold:** 3,535 units
+The cleaned dataset was analyzed from several business perspectives.
 
-### Customer Behavior
-* Only **11 customers (0.93%)** placed more than one order; **1,178 (99.07%)** ordered exactly once
-* No customer placed more than two orders
-* Top spender (`C38840`) is the only repeat customer among the top 10 by spending
+## 💰 Business Performance
 
-### Time-Based Trends
-* **June** was the strongest month ($170,616.13); **September** the weakest ($69,321.65)
+Key metrics identified during the analysis:
 
-### Product Performance
-* **Chair** ($195,620.11) and **Printer** ($195,612.61) are the top revenue-generating products, followed closely by Laptop, Tablet, Monitor, Desk, and Phone
-* Same ranking roughly holds by quantity sold
+* **Total order value:** $1,264,761.96
+* **Average order value:** $1,053.97
+* **Total orders:** 1,200
+* **Unique customers:** 1,189
+* **Total quantity sold:** 3,535 units
 
-### Payment Methods
-* **Credit Card** generates the highest revenue ($263,847.63), followed by Online, Cash, Gift Card, and Debit Card
-
-### Order Status
-* **Cancelled orders** carry the highest associated order value ($276,396.21) — despite being lost sales, worth flagging as a business risk since this isn't realized revenue
-
-### Coupons
-* **FREESHIP** is the most-used coupon (313 orders) and generates the highest coupon-associated revenue ($335,036.99)
-
-### Referral Sources
-* **Instagram** is the leading referral source by order count (259 orders)
-
-### Relationships Between Variables
-* **UnitPrice vs Quantity:** correlation of 0.015 — no meaningful relationship; purchase quantity appears driven by need rather than price sensitivity
+> **Note:** Order values associated with cancelled orders should not automatically be interpreted as realized revenue. Cancellation impact was therefore analyzed separately.
 
 ---
 
-## Key Insights
+## 👥 Customer Behavior
 
-1. The dataset contains **1,200 orders** from **1,189 unique customers**, generating total revenue of approximately **$1.26M** at an average order value of **$1,053.97**
-2. Customer retention is very low — only **0.93%** of customers placed more than one order
-3. **Chair** and **Printer** are the top revenue-generating products, generating almost identical revenue
-4. **Credit Card** generated the highest revenue among payment methods (**$263,847.63**)
-5. **June** recorded the highest monthly revenue; **September** recorded the lowest
-6. **FREESHIP** was the most frequently used coupon and generated the highest coupon-associated revenue
-7. **UnitPrice and Quantity** show almost no linear relationship (r = 0.015)
-8. **Cancelled orders** were associated with the highest total order value of any status — this should not be treated as realized revenue
-9. **Instagram** was the most common referral source by order count
+Customer purchasing behavior revealed extremely low repeat purchasing.
 
-## Business Recommendations
+* **11 customers (0.93%)** placed more than one order
+* **1,178 customers (99.07%)** placed exactly one order
+* No customer placed more than two orders
+* `C38840` was the only repeat customer appearing among the top 10 customers by spending
 
-1. **Improve customer retention** — the repeat rate is only 0.93%; consider loyalty programs, personalized offers, and post-purchase engagement
-2. **Focus on high-performing products** — maintain strong inventory and targeted promotions for Chair and Printer
-3. **Investigate cancelled orders** — identify root causes to recover lost revenue
-4. **Evaluate promotional strategy** — confirm FREESHIP is net-positive for acquisition and order value, not just usage volume
-5. **Plan around seasonality** — investigate what drives the June peak and September trough, and align marketing/inventory accordingly
-6. **Strengthen high-performing channels** — Instagram drives the most orders; consider increasing marketing investment there
-7. **Use customer data for segmentation** — since most customers purchase only once, targeted re-engagement campaigns could improve lifetime value
+### Key Insight
 
-## Conclusion
+The business appears to have a significant **customer retention opportunity**, as the overwhelming majority of customers made only one purchase.
 
-This project demonstrated the complete data analyst workflow — from data cleaning and validation through exploratory data analysis and visualization — using Python, Pandas, Matplotlib, and Seaborn. The dataset was cleaned by handling missing values, checking duplicates, validating dates, cleaning text fields, and performing final validation. EDA then uncovered patterns in business performance, customer behavior, product performance, payment methods, order status, coupon usage, referral sources, and relationships between numerical variables.
+---
 
-The analysis provided actionable insights — including low repeat purchasing, strong performance from Chair and Printer, Credit Card as the top-revenue payment method, FREESHIP's strong coupon performance, and significant seasonal revenue differences — that can guide retention strategy, cancellation investigation, promotion optimization, and channel-focused marketing.
+## 📅 Monthly Sales Trends
 
-## How to Run
+Monthly analysis showed considerable variation in order value.
 
-```bash
-pip install pandas numpy matplotlib seaborn openpyxl
-jupyter notebook ecommerce-sales-eda.ipynb
-```
+* 🟢 **June:** Highest monthly order value — **$170,616.13**
+* 🔴 **September:** Lowest monthly order value — **$69,321.65**
 
-## Repository Contents
+### Key Insight
 
-```
-├── ecommerce-sales-eda.ipynb   # Full analysis notebook
-├── Dataset for Data Analytics.xlsx
+The large difference between peak and low months suggests that the business could investigate seasonal demand, promotions, customer activity, and inventory availability.
+
+---
+
+## 🛍️ Product Performance
+
+The leading products by total order value were:
+
+1. **Chair** — $195,620.11
+2. **Printer** — $195,612.61
+3. Laptop
+4. Tablet
+5. Monitor
+6. Desk
+7. Phone
+
+Chair and Printer generated almost identical order values and were the strongest-performing products in the dataset.
+
+The product ranking was also broadly similar when examining quantity sold.
+
+### Key Insight
+
+High-performing products such as Chair and Printer should receive appropriate attention in inventory planning, merchandising, and promotional campaigns.
+
+---
+
+## 💳 Payment Method Analysis
+
+Revenue/order value by payment method showed:
+
+1. **Credit Card** — $263,847.63
+2. Online
+3. Cash
+4. Gift Card
+5. Debit Card
+
+### Key Insight
+
+Credit Card transactions represented the highest-value payment segment in the dataset.
+
+---
+
+## 📦 Order Status
+
+Cancelled orders had an associated order value of:
+
+**$276,396.21**
+
+However, these orders should **not be treated as realized revenue**.
+
+### Key Insight
+
+The high value associated with cancelled orders represents a potential business risk. Understanding why high-value orders are cancelled could help identify operational, payment, delivery, inventory, or customer-experience problems.
+
+---
+
+## 🎟️ Coupon Analysis
+
+`FREESHIP` was the most frequently used coupon:
+
+* **313 orders**
+* **$335,036.99** in associated order value
+
+### Key Insight
+
+FREESHIP appears to be an important promotional mechanism. However, high usage alone does not prove that the campaign is profitable.
+
+Further analysis should compare:
+
+* Orders with vs. without coupons
+* Average order value
+* Customer acquisition
+* Repeat purchases
+* Discount/shipping costs
+* Profitability
+
+---
+
+## 📱 Referral Source Analysis
+
+**Instagram** generated the highest number of orders:
+
+**259 orders**
+
+### Key Insight
+
+Instagram appears to be the strongest referral source by order count and may represent an important channel for customer acquisition.
+
+However, conversion volume should ideally be evaluated alongside revenue, customer retention, and acquisition cost before increasing marketing investment.
+
+---
+
+## 🔗 Relationship Analysis
+
+The correlation between **UnitPrice** and **Quantity** was:
+
+**r = 0.015**
+
+This indicates an almost nonexistent linear relationship between product unit price and quantity purchased in this dataset.
+
+### Key Insight
+
+Within this dataset, higher-priced products were not strongly associated with either higher or lower purchase quantities.
+
+> Correlation does not establish causation, and the result only describes the linear relationship observed in this dataset.
+
+---
+
+# 🔎 Key Business Insights
+
+### 1. Customer retention is the biggest opportunity
+
+Only **0.93% of customers placed more than one order**, indicating very low repeat purchasing.
+
+### 2. Chair and Printer are the strongest products
+
+Both generated approximately **$195.6K** in associated order value and were the leading products.
+
+### 3. Credit Card is the leading payment method by order value
+
+Credit Card generated approximately **$263.8K** in associated order value.
+
+### 4. Sales vary significantly across months
+
+June was the strongest month, while September was the weakest.
+
+### 5. FREESHIP is the most-used coupon
+
+The coupon appeared on **313 orders** and was associated with approximately **$335K** in order value.
+
+### 6. Cancelled orders represent a significant risk
+
+Cancelled orders were associated with **$276.4K** in order value, making cancellation analysis an important business opportunity.
+
+### 7. Instagram is the leading referral channel
+
+Instagram generated the highest number of orders among the referral sources.
+
+### 8. Price and quantity have almost no linear relationship
+
+The correlation coefficient of **0.015** suggests virtually no linear relationship between UnitPrice and Quantity.
+
+---
+
+# 💡 Business Recommendations
+
+### 1. Improve Customer Retention
+
+With only a 0.93% repeat-customer rate, the business should consider:
+
+* Loyalty programs
+* Personalized offers
+* Post-purchase emails
+* Re-engagement campaigns
+* Customer segmentation
+
+### 2. Prioritize High-Performing Products
+
+Maintain appropriate inventory levels for strong-performing products such as **Chair and Printer** and consider targeted promotional campaigns.
+
+### 3. Investigate Cancelled Orders
+
+Analyze cancellation reasons and identify whether cancellations are related to:
+
+* Payment issues
+* Inventory problems
+* Delivery delays
+* Customer behavior
+* Order processing issues
+
+### 4. Evaluate Coupon Effectiveness
+
+FREESHIP has high usage, but usage alone does not demonstrate profitability.
+
+The business should measure its impact on:
+
+* Average order value
+* Customer acquisition
+* Repeat purchases
+* Shipping costs
+* Profit margins
+
+### 5. Investigate Seasonal Patterns
+
+Analyze the reasons behind the June peak and September decline to improve:
+
+* Marketing campaigns
+* Inventory planning
+* Promotional timing
+* Sales forecasting
+
+### 6. Strengthen High-Performing Acquisition Channels
+
+Instagram generated the highest number of orders. Further analysis should determine whether Instagram also produces high-value and high-retention customers.
+
+### 7. Segment Customers
+
+Customer segmentation could help identify:
+
+* One-time customers
+* Repeat customers
+* High-value customers
+* Coupon-driven customers
+* Channel-specific customers
+
+This could support more targeted marketing and improve customer lifetime value.
+
+---
+
+# 🛠️ Tools & Technologies
+
+* **Python**
+* **Pandas**
+* **NumPy**
+* **Matplotlib**
+* **Seaborn**
+* **Jupyter Notebook**
+* **Microsoft Excel**
+
+---
+
+# 📁 Repository Structure
+
+```text
+E-Commerce-Sales-Analysis/
+│
+├── E_Commerce_Data_Analytics.ipynb
+├── E_Commerce Dataset.xlsx
 └── README.md
 ```
+
+---
+
+# 🎯 Conclusion
+
+This project demonstrates a complete **data analyst workflow**, from raw data inspection and cleaning to exploratory analysis, visualization, and business recommendations.
+
+The dataset was systematically prepared by handling missing values, validating dates, checking duplicate records and identifiers, cleaning text fields, and performing final data-quality validation.
+
+Exploratory analysis then examined **business performance, customer behavior, product performance, payment methods, order status, coupon usage, referral channels, and variable relationships**.
+
+The analysis highlighted several important business opportunities, particularly **improving customer retention, investigating cancelled orders, optimizing promotional campaigns, understanding seasonal demand, and strengthening effective customer acquisition channels**.
+
+Overall, the project demonstrates how Python-based data analysis can transform a raw e-commerce dataset into **structured insights that can support business decision-making**.
